@@ -1,0 +1,19 @@
+#This code scraps the top 5 links from google for a given search term using BeautifulSoup
+import requests
+import urllib.request as request
+from bs4 import BeautifulSoup
+import datetime
+def crawler(search_term):
+    links_list=[]
+    urls=requests.get("https://www.google.com/search?q=" + search_term)
+    soup=BeautifulSoup(urls.text,'html.parser')
+    r=soup.select('.kCrYT a')
+    c="https://google.com/"+r[0].get('href')
+    print("Related links: ")
+    for l in r[1:7]:
+        link=l.get('href')#to get the links from the a tag
+        if(link.find('https://www.google.com')==-1):
+            links_list.append('http://www.google.com'+link)#appending the links to a list
+    for i in range(0,len(links_list)):
+        print(links_list[i])
+crawler("<enter search term here>")
